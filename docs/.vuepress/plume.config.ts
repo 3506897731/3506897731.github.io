@@ -23,7 +23,7 @@ export default defineThemeConfig({
   appearance: true,  // 配置 深色模式切换（启用深色/浅色模式切换按钮）
 
   social: [
-    { icon: 'fa6-brands:github-alt', link: 'https://github.com/3506897731/Morro_Doc' },
+    { icon: 'fa6-brands:github-alt', link: 'https://github.com/3506897731/3506897731.github.io' },
   ],
   navbarSocialInclude: ['fa6-brands:github-alt'], // 允许显示在导航栏的 social 社交链接
   

@@ -20,7 +20,7 @@ config:
         -
           theme: alt
           text: Github →
-          link: https://github.com/3506897731/Morro_Doc
+          link: https://github.com/3506897731/3506897731.github.io
   -
     type: features
     features:
