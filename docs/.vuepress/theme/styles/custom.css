@@ -1,4 +1,8 @@
 :root {
+  /** 导航栏：半透明、无下边框 */
+  --vp-nav-bg-color: rgba(255, 255, 255, 0.75);
+  --vp-nav-screen-bg-color: rgba(255, 255, 255, 0.9);
+
   /** 主题颜色 */
 
   
@@ -31,8 +35,22 @@
   --vp-c-text-hero-text: #808080;
 }
 
+/** 导航栏：去掉下边框 */
+.vp-navbar,
+.vp-nav.fixed .vp-navbar {
+  border-bottom: none !important;
+}
+
+.vp-navbar .content-body {
+  backdrop-filter: blur(8px);
+}
+
 /** 深色模式 */
 [data-theme="dark"] {
+  /** 导航栏：深色半透明 */
+  --vp-nav-bg-color: rgba(27, 27, 31, 0.75);
+  --vp-nav-screen-bg-color: rgba(27, 27, 31, 0.95);
+
   /*
   --vp-c-brand-1: #8cccd5;
   --vp-c-brand-2: #6aa1b7;

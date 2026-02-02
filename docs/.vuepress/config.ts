@@ -21,7 +21,7 @@ export default defineUserConfig({
 
   head: [
     // 配置站点图标（浏览器标签页图标）
-    ['link', { rel: 'icon', type: 'image/png', href: '/morro.png' }],
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/morro.svg' }],
   ],
 
   bundler: viteBundler(),

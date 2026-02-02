@@ -1,6 +1,7 @@
 ---
 title: 面试准备
 createTime: 2026/01/29
+permalink: /doc/Interview/
 ---
 
 # 面试准备

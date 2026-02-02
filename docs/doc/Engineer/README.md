@@ -1,6 +1,7 @@
 ---
 title: 工程实践
 createTime: 2026/01/29
+permalink: /doc/Engineer/
 ---
 
 # 工程实践
