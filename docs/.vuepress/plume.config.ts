@@ -18,7 +18,7 @@ import { zhNavbar } from './navbar'
  * @see https://theme-plume.vuejs.press/config/theme/
  */
 export default defineThemeConfig({
-  logo: '/morro.png',  // 导航栏 logo
+  logo: '/morro.svg',  // 导航栏 logo（左上角）
 
   appearance: true,  // 配置 深色模式切换（启用深色/浅色模式切换按钮）
 
