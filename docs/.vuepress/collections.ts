@@ -28,15 +28,12 @@ import { defineCollection, defineCollections } from 'vuepress-theme-plume'
 
 /* =================== 文档集合配置 ======================= */
 
-// Interview 面试相关文档
 const interviewCollection = defineCollection({
   type: 'doc',
-  dir: 'doc/Interview',  // 对应 docs/doc/Interview/ 文件夹
-  linkPrefix: '/doc/Interview/',  // URL 前缀
+  dir: 'doc/Interview',
+  linkPrefix: '/doc/Interview/',
   title: '面试准备',
-  // 根据文件夹结构自动生成侧边栏
-  sidebar: 'auto',
-  // 默认折叠所有侧边栏组
+  sidebar: 'auto',  // 默认折叠所有侧边栏组
 })
 
 // Engineer 工程实践文档
@@ -45,9 +42,7 @@ const engineerCollection = defineCollection({
   dir: 'doc/Engineer',  // 对应 docs/doc/Engineer/ 文件夹
   linkPrefix: '/doc/Engineer/',  // URL 前缀
   title: '工程实践',
-  // 根据文件夹结构自动生成侧边栏
-  sidebar: 'auto',
-  // 默认折叠所有侧边栏组
+  sidebar: 'auto',  // 默认折叠所有侧边栏组
 })
 
 /**

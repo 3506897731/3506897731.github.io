@@ -43,6 +43,21 @@
   backdrop-filter: blur(8px);
 }
 
+/** 主题切换按钮：去掉边框 */
+.vp-navbar .vp-switch {
+  border: none !important;
+}
+
+/** 右侧大纲：去掉「此页内容」旁的打印小图标 */
+.vp-doc-aside-outline .outline-title .icon {
+  display: none;
+}
+
+/** 提示容器 note：背景色 #f5f5f6 */
+.vp-doc .hint-container.note {
+  background-color: #f8f8f8 !important;
+}
+
 /** 深色模式 */
 [data-theme="dark"] {
   /** 导航栏：深色半透明 */
