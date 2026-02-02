@@ -22,4 +22,12 @@ permalink: /doc/
 
 ::::
 
-全栈 / Agent 方向开发，主要使用 **TypeScript**、**Python**、**Rust**，熟悉 Node.js、Go。项目经历以 **Agent 与 LLM 应用** 为主：做过基于 RAG 的问答与文档助手、多步推理的 Task Agent、以及结合 Function Calling 的客服/工单类 Agent；在工具链、Prompt 与评估、成本与延迟优化上有一定实践。
+### Programming Languages
+
+![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white) ![Python](https://img.shields.io/badge/Python-14354C?style=for-the-badge&logo=python&logoColor=white) ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB) \
+![Rust](https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+
+### Architecture & Technologies
+
+![Microservices](https://img.shields.io/badge/Microservices-FF6B6B?style=for-the-badge&logo=docker&logoColor=white) ![RESTful API](https://img.shields.io/badge/RESTful_API-FF6B6B?style=for-the-badge&logo=api&logoColor=white) ![Event-Driven](https://img.shields.io/badge/Event--Driven-4ECDC4?style=for-the-badge&logo=apache-kafka&logoColor=white) \
+![Domain-Driven Design](https://img.shields.io/badge/DDD-95E1D3?style=for-the-badge&logo=architecture&logoColor=white) ![CQRS](https://img.shields.io/badge/CQRS-95E1D3?style=for-the-badge&logo=architecture&logoColor=white) ![Service Mesh](https://img.shields.io/badge/Service_Mesh-95E1D3?style=for-the-badge&logo=istio&logoColor=white)

@@ -9,7 +9,7 @@ import { defineNavbarConfig } from 'vuepress-theme-plume'
 export const zhNavbar = defineNavbarConfig([
   { text: '', link: '/', icon: 'mingcute:home-1-fill' },
   {
-    text: '',
+    text: 'DOC',
     items: [
       { text: 'Interview', link: '/doc/Interview/' },
       { text: 'Engineer', link: '/doc/Engineer/' },

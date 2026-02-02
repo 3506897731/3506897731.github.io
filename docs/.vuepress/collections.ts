@@ -28,12 +28,32 @@ import { defineCollection, defineCollections } from 'vuepress-theme-plume'
 
 /* =================== 文档集合配置 ======================= */
 
+// Interview 左侧导航（全英文、自定义、分组默认折叠）
+const interviewSidebar = [
+  { text: 'FUNDAMENTALS', link: '/doc/Interview/fundamentals/' },
+  { text: 'FRONTEND', link: '/doc/Interview/frontend/' },
+  {
+    text: 'BACKEND',
+    link: '/doc/Interview/backend/',
+    collapsed: true,
+    items: [
+      { text: 'Languages', link: '/doc/Interview/backend/language/' },
+      { text: 'API Design', link: '/doc/Interview/backend/api-design/' },
+      { text: 'Architecture', link: '/doc/Interview/backend/architecture/' },
+      { text: 'High Availability', link: '/doc/Interview/backend/high-availability/' },
+    ],
+  },
+  { text: 'CLOUD-INFRA', link: '/doc/Interview/cloud-infra/' },
+  { text: 'AGENT-AI', link: '/doc/Interview/agent-ai/' },
+  { text: 'SOFT-SKILLS', link: '/doc/Interview/soft-skills/' },
+]
+
 const interviewCollection = defineCollection({
   type: 'doc',
   dir: 'doc/Interview',
   linkPrefix: '/doc/Interview/',
   title: '面试准备',
-  sidebar: 'auto',  // 默认折叠所有侧边栏组
+  sidebar: interviewSidebar,
 })
 
 // Engineer 工程实践文档
