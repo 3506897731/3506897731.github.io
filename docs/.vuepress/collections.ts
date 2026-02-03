@@ -37,7 +37,28 @@ const interviewSidebar = [
     link: '/doc/Interview/backend/',
     collapsed: true,
     items: [
-      { text: 'Languages', link: '/doc/Interview/backend/language/' },
+      { 
+        text: 'Languages', 
+        link: '/doc/Interview/backend/language/' ,
+        collapsed: true,
+        items: [
+          { text: 'Java', 
+            link: '/doc/Interview/backend/language/java/' ,
+            collapsed: true,
+            items: [
+              { text: 'Coding Standards', link: '/doc/Interview/backend/language/java/coding-standards/' },
+            ],
+          },
+          {
+            text: 'MySQL',
+            link: '/doc/Interview/backend/language/mysql/',
+            collapsed: true,
+            items: [
+              { text: 'Coding Standards', link: '/doc/Interview/backend/language/mysql/coding-standards/' },
+            ],
+          },
+        ],
+      },
       { text: 'API Design', link: '/doc/Interview/backend/api-design/' },
       { text: 'Architecture', link: '/doc/Interview/backend/architecture/' },
       { text: 'High Availability', link: '/doc/Interview/backend/high-availability/' },

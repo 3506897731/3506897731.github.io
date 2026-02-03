@@ -1,7 +1,7 @@
 ---
 title: Python
 createTime: 2026/02/02
-permalink: /doc/Interview/backend/python/
+permalink: /doc/Interview/backend/language/python/
 ---
 
 # Python

@@ -1,7 +1,7 @@
 ---
 title: Go
 createTime: 2026/02/02
-permalink: /doc/Interview/backend/go/
+permalink: /doc/Interview/backend/language/go/
 ---
 
 # Go

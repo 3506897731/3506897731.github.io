@@ -1,7 +1,7 @@
 ---
 title: Scala
 createTime: 2026/02/02
-permalink: /doc/Interview/backend/scala/
+permalink: /doc/Interview/backend/language/scala/
 ---
 
 # Scala

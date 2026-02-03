@@ -1,7 +1,7 @@
 ---
 title: SQL
 createTime: 2026/02/02
-permalink: /doc/Interview/backend/sql/
+permalink: /doc/Interview/backend/language/sql/
 ---
 
 # SQL

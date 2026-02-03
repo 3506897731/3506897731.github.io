@@ -1,6 +1,6 @@
 ---
 title: 语言
-createTime: 2026/02/02
+createTime: 2026/01/29
 permalink: /doc/Interview/backend/language/
 ---
 
@@ -14,7 +14,7 @@ permalink: /doc/Interview/backend/language/
 
 **优缺点**：JVM 成熟、工具链与监控完善；启动与内存占用较大，Kotlin[^2] 更简洁。
 
-[More →](/doc/Interview/backend/java-kotlin/)
+[More →](/doc/Interview/backend/language/java/)
 :::
 
 ::: card title="Scala" icon="logos:scala"
@@ -23,7 +23,7 @@ permalink: /doc/Interview/backend/language/
 
 **优缺点**：表达力强、与 Java 互操作、Spark/Akka 等生态。
 
-[More →](/doc/Interview/backend/scala/)
+[More →](/doc/Interview/backend/language/scala/)
 :::
 
 ::: card title="SQL" icon="devicon:mysql-wordmark"
@@ -32,7 +32,7 @@ permalink: /doc/Interview/backend/language/
 
 **优缺点**：声明式、标准化、与各类存储/数仓兼容；复杂分析需优化，方言差异需注意。
 
-[More →](/doc/Interview/backend/sql/)
+[More →](/doc/Interview/backend/language/sql/)
 :::
 
 ::: card title="Python" icon="logos:python"
@@ -41,7 +41,7 @@ permalink: /doc/Interview/backend/language/
 
 **优缺点**：库多、AI 生态强；GIL 限制多线程 CPU 并行，性能与类型需补强。
 
-[More →](/doc/Interview/backend/python/)
+[More →](/doc/Interview/backend/language/python/)
 :::
 
 ::: card title="TypeScript" icon="logos:typescript-icon"
@@ -50,7 +50,7 @@ permalink: /doc/Interview/backend/language/
 
 **优缺点**：类型安全、IDE 体验好、与 JS 生态无缝兼容。
 
-[More →](/doc/Interview/backend/typescript/)
+[More →](/doc/Interview/backend/language/typescript/)
 :::
 
 ::: card title="Rust" icon="logos:rust"
@@ -59,7 +59,7 @@ permalink: /doc/Interview/backend/language/
 
 **优缺点**：内存安全无 GC、零成本抽象、并发安全。
 
-[More →](/doc/Interview/backend/rust/)
+[More →](/doc/Interview/backend/language/rust/)
 :::
 
 ::: card title="Go" icon="logos:go"
@@ -68,7 +68,7 @@ permalink: /doc/Interview/backend/language/
 
 **优缺点**：并发简单（goroutine）、部署简单（单二进制）、性能好。
 
-[More →](/doc/Interview/backend/go/)
+[More →](/doc/Interview/backend/language/go/)
 :::
 
 ::::

@@ -65,6 +65,9 @@ export default defineUserConfig({
       locales: { '/': { placeholder: 'Search' } },
     },
 
+    lastUpdated: false,   // 不显示右下角「最后更新于」
+    contributors: false,  // 不显示右下角「贡献者」
+
     /**
      * Algolia DocSearch
      * 启用此搜索需要将 本地搜索 search 设置为 false
@@ -81,11 +84,11 @@ export default defineUserConfig({
      * Shiki 代码高亮
      * @see https://theme-plume.vuejs.press/config/plugins/code-highlight/
      */
-    // codeHighlighter: {
+    codeHighlighter: {
     //   twoslash: true, // 启用 twoslash
     //   whitespace: true, // 启用 空格/Tab 高亮
-    //   lineNumbers: true, // 启用行号
-    // },
+      lineNumbers: false, // 关闭代码行号显示
+    },
 
     /* 文章字数统计、阅读时间，设置为 false 则禁用 */
     // readingTime: true,
@@ -140,7 +143,7 @@ export default defineUserConfig({
      * 水印
      * @see https://theme-plume.vuejs.press/guide/features/watermark/
      */
-    // watermark: true,
+    watermark: true,
 
     /**
      * 评论 comments

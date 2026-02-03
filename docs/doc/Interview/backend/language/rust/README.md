@@ -1,7 +1,7 @@
 ---
 title: Rust
 createTime: 2026/02/02
-permalink: /doc/Interview/backend/rust/
+permalink: /doc/Interview/backend/language/rust/
 ---
 
 # Rust
