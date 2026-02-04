@@ -1,7 +1,7 @@
 ---
 title: 云与基础设施
 createTime: 2026/01/29
-permalink: /doc/Interview/cloud-infra/
+permalink: /doc/Interview/cloud-infra-devops/
 ---
 
 # 云与基础设施

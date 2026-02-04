@@ -1,7 +1,7 @@
 ---
 title: TypeScript
 createTime: 2026/02/02
-permalink: /doc/Interview/backend/language/typescript/
+permalink: /doc/Interview/frontend/language/typescript/
 ---
 
 # TypeScript

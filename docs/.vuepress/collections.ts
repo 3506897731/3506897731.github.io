@@ -30,11 +30,89 @@ import { defineCollection, defineCollections } from 'vuepress-theme-plume'
 
 // Interview 左侧导航（全英文、自定义、分组默认折叠）
 const interviewSidebar = [
-  { text: 'FUNDAMENTALS', link: '/doc/Interview/fundamentals/' },
-  { text: 'FRONTEND', link: '/doc/Interview/frontend/' },
+  { text: 'FUNDAMENTALS', 
+    link: '/doc/Interview/fundamentals/' ,
+    icon: 'lucide:dog',
+    collapsed: true,
+    items: [
+      {
+        text: 'Data Engineering',
+        link: '/doc/Interview/fundamentals/data-engineering/',
+        collapsed: true,
+        items: [
+          {
+            text: 'Storage Layer',
+            link: '/doc/Interview/fundamentals/data-engineering/storage/',
+          },
+          {
+            text: 'Compute Layer',
+            link: '/doc/Interview/fundamentals/data-engineering/compute/',
+          },
+          {
+            text: 'Query Layer',
+            link: '/doc/Interview/fundamentals/data-engineering/query/',
+          },
+          {
+            text: 'Scheduling Layer',
+            link: '/doc/Interview/fundamentals/data-engineering/scheduling/',
+          },
+        ],
+      },
+      {
+        text: 'Access Control',
+        link: '/doc/Interview/fundamentals/access-control/',
+      },
+    ],
+  },
+  { text: 'FRONTEND',
+    link: '/doc/Interview/frontend/',
+    icon: 'streamline-flex:allergens-fish',
+    collapsed: true,
+    items: [
+      {
+        text: 'Languages',
+        link: '/doc/Interview/frontend/language/',
+        collapsed: true,
+        items: [
+          {
+            text: 'JavaScript',
+            link: '/doc/Interview/frontend/language/javascript/',
+          },
+          {
+            text: 'TypeScript',
+            link: '/doc/Interview/frontend/language/typescript/',
+          },
+        ],
+      },
+      {
+        text: 'Frameworks',
+        link: '/doc/Interview/frontend/framework/',
+        collapsed: true,
+        items: [
+          {
+            text: 'React',
+            link: '/doc/Interview/frontend/framework/React/',
+          },
+          {
+            text: 'Angular',
+            link: '/doc/Interview/frontend/framework/Angular/',
+          },
+          {
+            text: 'Next.js',
+            link: '/doc/Interview/frontend/framework/Next.js/',
+          },
+        ],
+      },
+      {
+        text: 'Architecture',
+        link: '/doc/Interview/frontend/architecture/',
+      },
+    ],
+  },
   {
     text: 'BACKEND',
     link: '/doc/Interview/backend/',
+    icon: 'solar:cat-broken',
     collapsed: true,
     items: [
       { 
@@ -47,26 +125,121 @@ const interviewSidebar = [
             collapsed: true,
             items: [
               { text: 'Coding Standards', link: '/doc/Interview/backend/language/java/coding-standards/' },
+              { text: 'Java Essentials', link: '/doc/Interview/backend/language/java/essentials/' },
             ],
           },
           {
-            text: 'MySQL',
-            link: '/doc/Interview/backend/language/mysql/',
-            collapsed: true,
-            items: [
-              { text: 'Coding Standards', link: '/doc/Interview/backend/language/mysql/coding-standards/' },
-            ],
+            text: 'Python',
+            link: '/doc/Interview/backend/language/python/',
+          },
+          {
+            text: 'Go',
+            link: '/doc/Interview/backend/language/go/',
+          },
+          {
+            text: 'Rust',
+            link: '/doc/Interview/backend/language/rust/',
           },
         ],
       },
-      { text: 'API Design', link: '/doc/Interview/backend/api-design/' },
-      { text: 'Architecture', link: '/doc/Interview/backend/architecture/' },
-      { text: 'High Availability', link: '/doc/Interview/backend/high-availability/' },
+      {
+        text: 'Frameworks',
+        link: '/doc/Interview/backend/framework/',
+        collapsed: true,
+        items: [
+          { text: 'Spring Boot', link: '/doc/Interview/backend/framework/spring-boot/' },
+        ],
+      },
+      { 
+        text: 'Architecture', 
+        link: '/doc/Interview/backend/architecture/',
+        collapsed: true,
+        items: [
+          { text: 'DDD', link: '/doc/Interview/backend/architecture/ddd/' },
+        ],
+      },
+      {
+        text: 'Databases',
+        link: '/doc/Interview/backend/databases/',
+        collapsed: true,
+        items: [
+          {
+            text: 'MySQL',
+            link: '/doc/Interview/backend/databases/mysql/',
+            collapsed: true,
+            items: [
+              { text: 'Coding Standards', link: '/doc/Interview/backend/databases/mysql/coding-standards/' },
+            ],
+          },
+          {
+            text: 'Redis',
+            link: '/doc/Interview/backend/databases/redis/',
+          },
+          {
+            text: 'Elasticsearch',
+            link: '/doc/Interview/backend/databases/es/',
+          },
+          {
+            text: 'SQL',
+            link: '/doc/Interview/backend/databases/sql/',
+          },
+        ],
+      },
+      {
+        text: 'API Design',
+        link: '/doc/Interview/backend/api/',
+        collapsed: true,
+        items: [
+          {
+            text: 'RESTful',
+            link: '/doc/Interview/backend/api/restful/',
+          },
+          {
+            text: 'RPC',
+            link: '/doc/Interview/backend/api/rpc/',
+          },
+          {
+            text: 'GraphQL',
+            link: '/doc/Interview/backend/api/graphql/',
+          },
+        ],
+      },
     ],
   },
-  { text: 'CLOUD-INFRA', link: '/doc/Interview/cloud-infra/' },
-  { text: 'AGENT-AI', link: '/doc/Interview/agent-ai/' },
-  { text: 'SOFT-SKILLS', link: '/doc/Interview/soft-skills/' },
+  {
+    text: 'MOBILE',
+    link: '/doc/Interview/mobile/',
+    icon: 'ri:cake-3-line',
+    collapsed: true,
+    items: [
+      {
+        text: 'Languages',
+        link: '/doc/Interview/mobile/language/',
+        collapsed: true,
+        items: [
+          {
+            text: 'Dart',
+            link: '/doc/Interview/mobile/language/dart/',
+          },
+        ],
+      },
+      {
+        text: 'Frameworks',
+        link: '/doc/Interview/mobile/framework/',
+        collapsed: true,
+        items: [
+          {
+            text: 'Flutter',
+            link: '/doc/Interview/mobile/framework/flutter/',
+          },
+        ],
+      },
+    ],
+  },
+  { text: 'CLOUD-INFRA-DEVOPS', 
+    link: '/doc/Interview/cloud-infra-devops/',
+    icon: 'icon-park-outline:rabbit'
+  },
 ]
 
 const interviewCollection = defineCollection({
