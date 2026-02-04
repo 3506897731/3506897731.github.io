@@ -1,7 +1,7 @@
 ---
 title: 基础与计算机原理
 createTime: 2026/01/29
-permalink: /doc/Interview/fundamentals/
+permalink: /doc/Interview/fund/
 ---
 
 # 基础与计算机原理

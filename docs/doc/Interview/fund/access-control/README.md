@@ -1,7 +1,7 @@
 ---
 title: Access Control 权限控制
 createTime: 2026/02/04 00:00:00
-permalink: /doc/Interview/fundamentals/access-control/
+permalink: /doc/Interview/fund/access-control/
 ---
 
 # Access Control 权限控制

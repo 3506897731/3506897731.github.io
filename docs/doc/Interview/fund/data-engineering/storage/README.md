@@ -1,7 +1,7 @@
 ---
 title: Storage Layer (存储层)
 createTime: 2026/02/04
-permalink: /doc/Interview/fundamentals/data-engineering/storage/
+permalink: /doc/Interview/fund/data-engineering/storage/
 ---
 
 # Storage Layer (存储层)

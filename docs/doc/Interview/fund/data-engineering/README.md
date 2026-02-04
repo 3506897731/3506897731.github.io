@@ -1,7 +1,7 @@
 ---
 title: Data Engineering
 createTime: 2026/02/04
-permalink: /doc/Interview/fundamentals/data-engineering/
+permalink: /doc/Interview/fund/data-engineering/
 ---
 
 # Data Engineering (数据工程)
@@ -18,7 +18,7 @@ permalink: /doc/Interview/fundamentals/data-engineering/
 
 **职责**：数据持久化、分布式存储、高可用性、可扩展性
 
-[More →](/doc/Interview/fundamentals/data-engineering/storage/)
+[More →](/doc/Interview/fund/data-engineering/storage/)
 :::
 
 ::: card title="Compute Layer (计算层)" icon="mdi:cpu-64-bit"
@@ -27,7 +27,7 @@ permalink: /doc/Interview/fundamentals/data-engineering/
 
 **职责**：批处理、流处理、数据转换、复杂计算
 
-[More →](/doc/Interview/fundamentals/data-engineering/compute/)
+[More →](/doc/Interview/fund/data-engineering/compute/)
 :::
 
 ::: card title="Query Layer (查询层)" icon="mdi:database-search"
@@ -36,7 +36,7 @@ permalink: /doc/Interview/fundamentals/data-engineering/
 
 **职责**：SQL 查询、数据分析、OLAP、即席查询
 
-[More →](/doc/Interview/fundamentals/data-engineering/query/)
+[More →](/doc/Interview/fund/data-engineering/query/)
 :::
 
 ::: card title="Scheduling Layer (调度层)" icon="mdi:clock-outline"
@@ -45,7 +45,7 @@ permalink: /doc/Interview/fundamentals/data-engineering/
 
 **职责**：任务编排、依赖管理、监控告警、重试机制
 
-[More →](/doc/Interview/fundamentals/data-engineering/scheduling/)
+[More →](/doc/Interview/fund/data-engineering/scheduling/)
 :::
 
 ::::

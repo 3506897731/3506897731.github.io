@@ -1,7 +1,7 @@
 ---
 title: Scheduling Layer (调度层)
 createTime: 2026/02/04
-permalink: /doc/Interview/fundamentals/data-engineering/scheduling/
+permalink: /doc/Interview/fund/data-engineering/scheduling/
 ---
 
 # Scheduling Layer (调度层)

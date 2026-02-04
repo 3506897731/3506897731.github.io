@@ -1,7 +1,7 @@
 ---
 title: Query Layer (查询层)
 createTime: 2026/02/04
-permalink: /doc/Interview/fundamentals/data-engineering/query/
+permalink: /doc/Interview/fund/data-engineering/query/
 ---
 
 # Query Layer (查询层)

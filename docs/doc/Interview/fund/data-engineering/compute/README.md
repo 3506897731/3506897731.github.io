@@ -1,7 +1,7 @@
 ---
 title: Compute Layer (计算层)
 createTime: 2026/02/04
-permalink: /doc/Interview/fundamentals/data-engineering/compute/
+permalink: /doc/Interview/fund/data-engineering/compute/
 ---
 
 # Compute Layer (计算层)

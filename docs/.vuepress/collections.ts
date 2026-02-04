@@ -30,37 +30,37 @@ import { defineCollection, defineCollections } from 'vuepress-theme-plume'
 
 // Interview 左侧导航（全英文、自定义、分组默认折叠）
 const interviewSidebar = [
-  { text: 'FUNDAMENTALS', 
-    link: '/doc/Interview/fundamentals/' ,
+  { text: 'FUND',
+    link: '/doc/Interview/fund/' ,
     icon: 'lucide:dog',
     collapsed: true,
     items: [
       {
         text: 'Data Engineering',
-        link: '/doc/Interview/fundamentals/data-engineering/',
+        link: '/doc/Interview/fund/data-engineering/',
         collapsed: true,
         items: [
           {
             text: 'Storage Layer',
-            link: '/doc/Interview/fundamentals/data-engineering/storage/',
+            link: '/doc/Interview/fund/data-engineering/storage/',
           },
           {
             text: 'Compute Layer',
-            link: '/doc/Interview/fundamentals/data-engineering/compute/',
+            link: '/doc/Interview/fund/data-engineering/compute/',
           },
           {
             text: 'Query Layer',
-            link: '/doc/Interview/fundamentals/data-engineering/query/',
+            link: '/doc/Interview/fund/data-engineering/query/',
           },
           {
             text: 'Scheduling Layer',
-            link: '/doc/Interview/fundamentals/data-engineering/scheduling/',
+            link: '/doc/Interview/fund/data-engineering/scheduling/',
           },
         ],
       },
       {
         text: 'Access Control',
-        link: '/doc/Interview/fundamentals/access-control/',
+        link: '/doc/Interview/fund/access-control/',
       },
     ],
   },
