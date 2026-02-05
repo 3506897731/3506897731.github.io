@@ -6,10 +6,42 @@ permalink: /doc/Interview/backend/language/java/
 
 # Java
 
-::: card title="导航" icon="noto-v1:cat-with-wry-smile"
+::: card title="目录导航" icon="noto-v1:cat-with-wry-smile"
 
 [Java 编码规范](/doc/Interview/backend/language/java/coding-standards/)：命名、格式、异常、注释、强制规定与常用约定
+
+[Java 常用类库](/doc/Interview/backend/language/java/essentials/)：核心库、工具库、数据库、API 库、安全库、测试库
 :::
+
+@startmindmap
+* Java Essentials
+  * 核心库
+    * 工具库
+      * 通用工具
+        * Guava
+        * Apache Commons Lang3
+        * Apache Commons Collections4
+      * 代码简化
+        * Lombok + MapStruct
+      * 国产工具
+        * Hutool
+    * 数据库
+    * API库
+    * 安全库
+    * 测试库
+  * JSON库
+    * Jackson
+      * 序列化/反序列化 + 注解处理
+    * Fastjson2
+      * 高性能
+    * Protocol/Thrift
+      * 跨语言 + RPC框架
+  * 日志库
+    * SLF4J
+      * 日志门面
+    * Logback
+      * 日志框架
+@endmindmap
 
 ## ==JVM==
 

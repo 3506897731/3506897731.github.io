@@ -131,8 +131,9 @@ export default defineUserConfig({
     //     type: 'katex',
     //   },
     //   chartjs: true,      // 启用 chart.js
-    //   echarts: true,      // 启用 ECharts
-      mermaid: true,      // 启用 mermaid
+    // //   echarts: true,      // 启用 ECharts
+    //   mermaid: true,      // 启用 mermaid
+      plantuml: true,     // 启用 plantuml
     //   flowchart: true,    // 启用 flowchart
     //   image: {
     //     figure: true,     // 启用 figure

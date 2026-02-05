@@ -6,15 +6,9 @@ permalink: /doc/Interview/backend/language/java/essentials/
 
 # Java Essentials
 
-本文介绍 Java 开发中最常用的第三方库,每个库都提供实际的代码示例。
+::: tabs
 
----
-
-## 1. Guava - Google 核心库
-
-Google 的 Java 核心库,提供集合、缓存、并发、字符串处理等增强工具。
-
-### Maven 依赖
+@tab Guava
 
 ```xml
 <dependency>
@@ -24,185 +18,7 @@ Google 的 Java 核心库,提供集合、缓存、并发、字符串处理等增
 </dependency>
 ```
 
-### 1.1 集合工具
-
-```java
-import com.google.common.collect.*;
-
-public class GuavaCollectionExample {
-    
-    public static void main(String[] args) {
-        // 创建不可变集合
-        ImmutableList<String> immutableList = ImmutableList.of("a", "b", "c");
-        ImmutableSet<String> immutableSet = ImmutableSet.of("x", "y", "z");
-        ImmutableMap<String, Integer> immutableMap = ImmutableMap.of(
-            "one", 1,
-            "two", 2,
-            "three", 3
-        );
-        
-        // Multimap - 一个key对应多个value
-        Multimap<String, String> multimap = ArrayListMultimap.create();
-        multimap.put("fruit", "apple");
-        multimap.put("fruit", "banana");
-        multimap.put("vegetable", "carrot");
-        System.out.println(multimap.get("fruit"));  // [apple, banana]
-        
-        // BiMap - 双向Map
-        BiMap<String, Integer> biMap = HashBiMap.create();
-        biMap.put("Alice", 1);
-        biMap.put("Bob", 2);
-        System.out.println(biMap.get("Alice"));      // 1
-        System.out.println(biMap.inverse().get(1));  // Alice
-        
-        // Table - 双键Map
-        Table<String, String, Integer> table = HashBasedTable.create();
-        table.put("Alice", "Math", 90);
-        table.put("Alice", "English", 85);
-        table.put("Bob", "Math", 88);
-        System.out.println(table.get("Alice", "Math"));  // 90
-        
-        // RangeSet - 区间集合
-        RangeSet<Integer> rangeSet = TreeRangeSet.create();
-        rangeSet.add(Range.closed(1, 10));
-        rangeSet.add(Range.closed(15, 20));
-        System.out.println(rangeSet.contains(5));   // true
-        System.out.println(rangeSet.contains(12));  // false
-        
-        // 集合分区
-        List<Integer> numbers = Lists.newArrayList(1, 2, 3, 4, 5, 6, 7);
-        List<List<Integer>> partitions = Lists.partition(numbers, 3);
-        System.out.println(partitions);  // [[1, 2, 3], [4, 5, 6], [7]]
-    }
-}
-```
-
-### 1.2 字符串处理
-
-```java
-import com.google.common.base.*;
-
-public class GuavaStringExample {
-    
-    public static void main(String[] args) {
-        // Joiner - 连接字符串
-        List<String> list = Arrays.asList("a", "b", "c");
-        String result = Joiner.on(",").join(list);
-        System.out.println(result);  // "a,b,c"
-        
-        // 跳过null值
-        String result2 = Joiner.on(",").skipNulls().join("a", null, "b");
-        System.out.println(result2);  // "a,b"
-        
-        // Splitter - 分割字符串
-        String input = "a,b,,c,  d";
-        Iterable<String> parts = Splitter.on(',')
-            .trimResults()
-            .omitEmptyStrings()
-            .split(input);
-        System.out.println(parts);  // [a, b, c, d]
-        
-        // CaseFormat - 命名转换
-        String camelCase = CaseFormat.LOWER_UNDERSCORE.to(
-            CaseFormat.LOWER_CAMEL, "user_name");
-        System.out.println(camelCase);  // "userName"
-        
-        // Strings 工具
-        String padded = Strings.padEnd("hello", 10, '!');
-        System.out.println(padded);  // "hello!!!!!"
-        
-        boolean empty = Strings.isNullOrEmpty("");
-        System.out.println(empty);  // true
-    }
-}
-```
-
-### 1.3 缓存
-
-```java
-import com.google.common.cache.*;
-
-public class GuavaCacheExample {
-    
-    public static void main(String[] args) throws Exception {
-        // 创建缓存
-        LoadingCache<String, User> cache = CacheBuilder.newBuilder()
-            .maximumSize(1000)                    // 最大容量
-            .expireAfterWrite(10, TimeUnit.MINUTES)  // 写入后10分钟过期
-            .recordStats()                        // 开启统计
-            .build(new CacheLoader<String, User>() {
-                @Override
-                public User load(String userId) throws Exception {
-                    // 缓存未命中时的加载逻辑
-                    return loadUserFromDatabase(userId);
-                }
-            });
-        
-        // 使用缓存
-        User user = cache.get("user123");
-        
-        // 手动添加
-        cache.put("user456", new User("456", "Bob"));
-        
-        // 移除
-        cache.invalidate("user123");
-        
-        // 查看统计
-        CacheStats stats = cache.stats();
-        System.out.println("命中率: " + stats.hitRate());
-        System.out.println("平均加载时间: " + stats.averageLoadPenalty());
-    }
-    
-    private static User loadUserFromDatabase(String userId) {
-        // 模拟数据库查询
-        return new User(userId, "User-" + userId);
-    }
-}
-
-@Data
-@AllArgsConstructor
-class User {
-    private String id;
-    private String name;
-}
-```
-
-### 1.4 函数式编程
-
-```java
-import com.google.common.base.*;
-import com.google.common.collect.*;
-
-public class GuavaFunctionalExample {
-    
-    public static void main(String[] args) {
-        // Optional - 处理null值
-        Optional<String> optional = Optional.of("hello");
-        System.out.println(optional.isPresent());  // true
-        System.out.println(optional.or("default"));  // "hello"
-        
-        // Predicate - 过滤
-        Predicate<Integer> isEven = num -> num % 2 == 0;
-        List<Integer> numbers = Lists.newArrayList(1, 2, 3, 4, 5, 6);
-        Iterable<Integer> evenNumbers = Iterables.filter(numbers, isEven);
-        System.out.println(evenNumbers);  // [2, 4, 6]
-        
-        // Function - 转换
-        Function<String, Integer> strLength = String::length;
-        List<String> words = Lists.newArrayList("hello", "world", "guava");
-        Iterable<Integer> lengths = Iterables.transform(words, strLength);
-        System.out.println(lengths);  // [5, 5, 5]
-    }
-}
-```
-
----
-
-## 2. Apache Commons Lang3 - 通用工具库
-
-提供字符串、数组、日期、数字等常用操作。
-
-### Maven 依赖
+@tab Apache
 
 ```xml
 <dependency>
@@ -210,9 +26,86 @@ public class GuavaFunctionalExample {
     <artifactId>commons-lang3</artifactId>
     <version>3.14.0</version>
 </dependency>
+<dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-collections4</artifactId>
+    <version>4.4</version>
+</dependency>
 ```
 
-### 2.1 字符串工具
+@tab Lombok
+
+```xml
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <version>1.18.30</version>
+    <scope>provided</scope>
+</dependency>
+```
+
+@tab MapStruct
+
+```xml
+<dependency>
+    <groupId>org.mapstruct</groupId>
+    <artifactId>mapstruct</artifactId>
+    <version>1.5.5.Final</version>
+</dependency>
+<dependency>
+    <groupId>org.mapstruct</groupId>
+    <artifactId>mapstruct-processor</artifactId>
+    <version>1.5.5.Final</version>
+    <scope>provided</scope>
+</dependency>
+```
+
+@tab Hutool
+
+```xml
+<dependency>
+    <groupId>cn.hutool</groupId>
+    <artifactId>hutool-all</artifactId>
+    <version>5.8.24</version>
+</dependency>
+```
+
+@tab JSON
+
+```xml
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.16.0</version>
+</dependency>
+```
+
+@tab SLF4J
+
+```xml
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-api</artifactId>
+    <version>2.0.11</version>
+</dependency>
+<dependency>
+    <groupId>ch.qos.logback</groupId>
+    <artifactId>logback-classic</artifactId>
+    <version>1.4.14</version>
+</dependency>
+```
+
+:::
+
+## 1. ==核心库==
+
+### 1.1 工具库 <Badge type="tip" text="通用工具" /> <Badge type="info" text="代码简化" />
+
+#### 1.1.1 通用工具：Apache + Guava
+
+Apache Commons 和 Guava 是 Java 开发中最常用的通用工具库。Apache Commons 更成熟稳定，Guava 更现代灵活。
+
+##### Apache Commons Lang3
 
 ```java
 import org.apache.commons.lang3.StringUtils;
@@ -256,7 +149,7 @@ public class CommonsLangStringExample {
 }
 ```
 
-### 2.2 数组工具
+**数组工具**
 
 ```java
 import org.apache.commons.lang3.ArrayUtils;
@@ -281,19 +174,11 @@ public class CommonsLangArrayExample {
         // 反转数组
         ArrayUtils.reverse(arr1);
         System.out.println(Arrays.toString(arr1));  // [3, 2, 1]
-        
-        // 移除元素
-        int[] removed = ArrayUtils.removeElement(arr2, 5);
-        System.out.println(Arrays.toString(removed));  // [4, 6]
-        
-        // 数组转字符串
-        String str = ArrayUtils.toString(arr2, "[]");
-        System.out.println(str);  // "[4,5,6]"
     }
 }
 ```
 
-### 2.3 对象工具
+**对象工具**
 
 ```java
 import org.apache.commons.lang3.ObjectUtils;
@@ -305,17 +190,9 @@ public class CommonsLangObjectExample {
         String result = ObjectUtils.defaultIfNull(null, "default");
         System.out.println(result);  // "default"
         
-        // 比较 (null安全)
-        int compare = ObjectUtils.compare(null, "abc");
-        System.out.println(compare);  // -1
-        
         // 判断所有参数是否为null
         boolean allNull = ObjectUtils.allNull(null, null, null);
         System.out.println(allNull);  // true
-        
-        // 判断任一参数是否为null
-        boolean anyNotNull = ObjectUtils.anyNotNull(null, "a", null);
-        System.out.println(anyNotNull);  // true
         
         // 返回第一个非null值
         String firstNonNull = ObjectUtils.firstNonNull(null, null, "hello", "world");
@@ -324,7 +201,7 @@ public class CommonsLangObjectExample {
 }
 ```
 
-### 2.4 日期工具
+**日期工具**
 
 ```java
 import org.apache.commons.lang3.time.DateUtils;
@@ -337,39 +214,22 @@ public class CommonsLangDateExample {
         
         // 格式化日期
         String formatted = DateFormatUtils.format(now, "yyyy-MM-dd HH:mm:ss");
-        System.out.println(formatted);  // "2026-02-04 12:30:45"
+        System.out.println(formatted);
         
         // 日期加减
         Date tomorrow = DateUtils.addDays(now, 1);
-        Date nextWeek = DateUtils.addWeeks(now, 1);
         Date nextMonth = DateUtils.addMonths(now, 1);
         
         // 截断日期
         Date truncated = DateUtils.truncate(now, Calendar.DATE);
-        System.out.println(truncated);  // 2026-02-04 00:00:00
-        
-        // 判断是否同一天
-        boolean sameDay = DateUtils.isSameDay(now, tomorrow);
-        System.out.println(sameDay);  // false
+        System.out.println(truncated);
     }
 }
 ```
 
----
+##### Apache Commons Collections4
 
-## 3. Apache Commons Collections4 - 集合增强
-
-### Maven 依赖
-
-```xml
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-collections4</artifactId>
-    <version>4.4</version>
-</dependency>
-```
-
-### 示例
+**集合操作**
 
 ```java
 import org.apache.commons.collections4.*;
@@ -400,40 +260,605 @@ public class CommonsCollectionsExample {
         Predicate<Integer> greaterThan3 = num -> num > 3;
         Collection<Integer> filtered = CollectionUtils.select(list1, greaterThan3);
         System.out.println(filtered);  // [4]
-        
-        // 转换集合
-        Transformer<Integer, String> toString = Object::toString;
-        Collection<String> transformed = CollectionUtils.collect(list1, toString);
-        System.out.println(transformed);  // ["1", "2", "3", "4"]
-        
-        // Bag - 允许重复的Set
+    }
+}
+```
+
+**Bag 使用**
+
+```java
+import org.apache.commons.collections4.Bag;
+import org.apache.commons.collections4.bag.HashBag;
+
+public class BagExample {
+    
+    public static void main(String[] args) {
         Bag<String> bag = new HashBag<>();
+        
+        // 添加元素（可重复）
         bag.add("apple", 3);
         bag.add("banana", 2);
-        System.out.println(bag.getCount("apple"));  // 3
+        
+        // 获取元素数量
+        System.out.println(bag.getCount("apple"));   // 3
+        System.out.println(bag.getCount("banana"));  // 2
+    }
+}
+```
+
+##### Guava
+
+**集合工具**
+
+```java
+import com.google.common.collect.*;
+
+public class GuavaCollectionExample {
+    
+    public static void main(String[] args) {
+        // 创建不可变集合
+        ImmutableList<String> list = ImmutableList.of("a", "b", "c");
+        ImmutableMap<String, Integer> map = ImmutableMap.of("one", 1, "two", 2);
+        
+        // Multimap - 一个key对应多个value
+        Multimap<String, String> multimap = ArrayListMultimap.create();
+        multimap.put("fruit", "apple");
+        multimap.put("fruit", "banana");
+        System.out.println(multimap.get("fruit"));  // [apple, banana]
+        
+        // BiMap - 双向Map
+        BiMap<String, Integer> biMap = HashBiMap.create();
+        biMap.put("Alice", 1);
+        biMap.put("Bob", 2);
+        System.out.println(biMap.inverse().get(1));  // Alice
+        
+        // RangeSet - 区间集合
+        RangeSet<Integer> rangeSet = TreeRangeSet.create();
+        rangeSet.add(Range.closed(1, 10));
+        System.out.println(rangeSet.contains(5));   // true
+    }
+}
+```
+
+**字符串处理**
+
+```java
+import com.google.common.base.*;
+
+public class GuavaStringExample {
+    
+    public static void main(String[] args) {
+        // Joiner - 连接字符串
+        String result = Joiner.on(",").join("a", "b", "c");
+        System.out.println(result);  // "a,b,c"
+        
+        // Splitter - 分割字符串
+        String input = "a,b,,c,  d";
+        Iterable<String> parts = Splitter.on(',')
+            .trimResults()
+            .omitEmptyStrings()
+            .split(input);
+        System.out.println(parts);  // [a, b, c, d]
+        
+        // CaseFormat - 命名转换
+        String camelCase = CaseFormat.LOWER_UNDERSCORE.to(
+            CaseFormat.LOWER_CAMEL, "user_name");
+        System.out.println(camelCase);  // "userName"
+    }
+}
+```
+
+**缓存**
+
+```java
+import com.google.common.cache.*;
+
+public class GuavaCacheExample {
+    
+    public static void main(String[] args) throws Exception {
+        LoadingCache<String, String> cache = CacheBuilder.newBuilder()
+            .maximumSize(1000)
+            .expireAfterWrite(10, TimeUnit.MINUTES)
+            .build(new CacheLoader<String, String>() {
+                @Override
+                public String load(String key) throws Exception {
+                    return "value-" + key;
+                }
+            });
+        
+        String value = cache.get("key1");
+        cache.put("key2", "custom-value");
+        System.out.println(value);
+    }
+}
+```
+
+#### 1.1.2 代码简化：Lombok + MapStruct
+
+##### Lombok
+
+**基本注解**
+
+```java
+import lombok.*;
+
+// @Data = @Getter + @Setter + @ToString + @EqualsAndHashCode
+@Data
+public class User {
+    private Long id;
+    private String username;
+    private String email;
+}
+```
+
+**Builder 模式**
+
+```java
+@Builder
+@Data
+class Product {
+    private Long id;
+    private String name;
+    private BigDecimal price;
+}
+
+// 使用
+Product product = Product.builder()
+    .id(1L)
+    .name("iPhone")
+    .price(new BigDecimal("999.99"))
+    .build();
+```
+
+**日志注解**
+
+```java
+@Slf4j
+@Service
+class UserService {
+    public void doSomething() {
+        log.info("Info message");
+        log.error("Error message", new Exception());
+    }
+}
+```
+
+##### MapStruct
+
+**对象映射**
+
+```java
+import org.mapstruct.*;
+
+@Mapper(componentModel = "spring")
+public interface UserMapper {
+    
+    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
+    
+    @Mapping(source = "createTime", target = "createTimeStr", dateFormat = "yyyy-MM-dd")
+    UserDTO toDTO(UserEntity entity);
+    
+    List<UserDTO> toDTOList(List<UserEntity> entities);
+}
+```
+
+#### 1.1.3 国产工具：Hutool
+
+**说明**：国产的工具类库，优点是比较全，也比较实用。选它要注意下它的协议是中国第一个开源协议木兰宽松许可证，商业型项目最好咨询下相关法务部门。
+
+**日期时间工具**
+
+```java
+import cn.hutool.core.date.*;
+
+public class HutoolDateExample {
+    
+    public static void main(String[] args) {
+        Date now = DateUtil.date();
+        String formatted = DateUtil.format(now, "yyyy-MM-dd HH:mm:ss");
+        System.out.println(formatted);
+        
+        Date parsed = DateUtil.parse("2026-02-04", "yyyy-MM-dd");
+        long between = DateUtil.between(now, parsed, DateUnit.DAY);
+        System.out.println("相差天数: " + between);
+    }
+}
+```
+
+**字符串工具**
+
+```java
+import cn.hutool.core.util.StrUtil;
+
+public class HutoolStrExample {
+    
+    public static void main(String[] args) {
+        System.out.println(StrUtil.isEmpty(""));      // true
+        String formatted = StrUtil.format("Hello {}, age is {}", "Alice", 25);
+        System.out.println(formatted);
+    }
+}
+```
+
+**集合工具**
+
+```java
+import cn.hutool.core.collection.*;
+
+public class HutoolCollectionExample {
+    
+    public static void main(String[] args) {
+        List<String> list = CollUtil.newArrayList("a", "b", "c");
+        String joined = CollUtil.join(list, ",");
+        System.out.println(joined);  // "a,b,c"
+    }
+}
+```
+
+**HTTP 工具**
+
+```java
+import cn.hutool.http.*;
+
+public class HutoolHttpExample {
+    
+    public static void main(String[] args) {
+        String result = HttpUtil.get("https://api.example.com/users");
+        System.out.println(result);
+    }
+}
+```
+
+**加密解密**
+
+```java
+import cn.hutool.crypto.digest.*;
+
+public class HutoolCryptoExample {
+    
+    public static void main(String[] args) {
+        String text = "Hello World";
+        String md5 = DigestUtil.md5Hex(text);
+        String sha256 = DigestUtil.sha256Hex(text);
+        System.out.println("MD5: " + md5);
+        System.out.println("SHA-256: " + sha256);
+    }
+}
+```
+
+::: card title="总结" icon="twemoji:star"
+- **通用工具**: Apache Commons（成熟稳定）推荐配合 Guava（现代灵活）使用
+- **代码简化**: Lombok + MapStruct 搭配效果最佳，显著减少模板代码
+- **国产方案**: Hutool 功能全面但需注意协议，商业项目需法务评估，小型项目可单用 Hutool
+:::
+
+### 1.2 数据库 <Badge type="tip" text="连接池" /> <Badge type="info" text="ORM框架" /> <Badge type="warning" text="SQL映射" />
+
+| 库 | 功能 | 易用性 | 性能 | 适用场景 |
+|----|------|--------|------|---------|
+| **HikariCP** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | **数据库连接池首选** |
+| **Druid** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | 监控和性能分析 |
+| **MyBatis** | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | 灵活 SQL 映射 |
+| **JPA/Hibernate** | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ | 完整 ORM 框架 |
+| **Spring Data** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | 快速开发 CRUD |
+
+#### 1.2.1 HikariCP
+
+```java
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+
+public class HikariCPExample {
+    
+    public static void main(String[] args) {
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl("jdbc:mysql://localhost:3306/db");
+        config.setUsername("root");
+        config.setPassword("password");
+        config.setMaximumPoolSize(20);
+        config.setMinimumIdle(5);
+        
+        HikariDataSource dataSource = new HikariDataSource(config);
+        // 使用 dataSource
+    }
+}
+```
+
+#### 1.2.2 Druid
+
+```java
+import com.alibaba.druid.pool.DruidDataSourceFactory;
+import javax.sql.DataSource;
+
+public class DruidExample {
+    
+    public static void main(String[] args) throws Exception {
+        Properties props = new Properties();
+        props.setProperty("url", "jdbc:mysql://localhost:3306/db");
+        props.setProperty("username", "root");
+        props.setProperty("password", "password");
+        props.setProperty("initialSize", "5");
+        props.setProperty("maxActive", "20");
+        
+        DataSource dataSource = DruidDataSourceFactory.createDataSource(props);
+    }
+}
+```
+
+::: card title="总结" icon="twemoji:star"
+- **连接池**: HikariCP（最高性能推荐）vs Druid（监控功能强），合理设置 maxPoolSize 和 minIdle
+- **ORM 选择**: MyBatis（灵活 SQL）vs Hibernate（完整 ORM）vs Spring Data（快速开发）
+:::
+
+### 1.3 API库 <Badge type="tip" text="REST API" /> <Badge type="info" text="异步编程" /> <Badge type="warning" text="API文档" />
+
+| 库 | 类型 | 易用性 | 功能 | 适用场景 |
+|----|------|--------|------|---------|
+| **Spring WebFlux** | 异步非阻塞 | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | **高并发 API 开发** |
+| **Spring Web MVC** | 同步阻塞 | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | 传统 REST API |
+| **Swagger/OpenAPI** | API 文档 | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | API 文档自动生成 |
+| **RxJava** | 响应式编程 | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | 复杂异步流程 |
+| **Project Reactor** | 响应式编程 | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | Spring 生态优先 |
+
+#### 1.3.1 Spring Web MVC 基本示例
+
+```java
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/users")
+public class UserController {
+    
+    @GetMapping("/{id}")
+    public User getUser(@PathVariable Long id) {
+        return new User(id, "Alice", "alice@example.com");
+    }
+    
+    @PostMapping
+    public User createUser(@RequestBody User user) {
+        return user;
+    }
+    
+    @PutMapping("/{id}")
+    public User updateUser(@PathVariable Long id, @RequestBody User user) {
+        user.setId(id);
+        return user;
+    }
+    
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long id) {
+        // 删除用户
+    }
+}
+```
+
+#### 1.3.2 Swagger 文档
+
+```java
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+@Configuration
+@EnableSwagger2
+public class SwaggerConfig {
+    
+    @Bean
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2)
+            .apiInfo(new ApiInfoBuilder()
+                .title("User API")
+                .description("用户管理接口")
+                .version("1.0")
+                .build())
+            .select()
+            .apis(RequestHandlerSelectors.basePackage("com.example"))
+            .paths(PathSelectors.any())
+            .build();
+    }
+}
+```
+
+### 1.4 安全库 <Badge type="tip" text="认证授权" /> <Badge type="info" text="加密安全" /> <Badge type="warning" text="Token" />
+
+| 库 | 功能 | 易用性 | 生态 | 适用场景 |
+|----|------|--------|------|---------|
+| **Spring Security** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | **企业级安全首选** |
+| **JWT (jjwt)** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | Token 认证 |
+| **Apache Shiro** | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | 轻量级安全 |
+| **Bouncy Castle** | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ | 加密算法库 |
+| **Jasypt** | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | 数据加密 |
+
+#### 1.4.1 Spring Security 基本配置
+
+```java
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+
+@EnableWebSecurity
+public class SecurityConfig {
+    
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeRequests()
+                .antMatchers("/public/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+            .formLogin();
+        return http.build();
     }
 }
 ```
 
 ---
 
-## 4. Jackson - JSON 处理
+#### 1.4.2 JWT 认证
 
-### Maven 依赖
+```java
+import io.jsonwebtoken.*;
+import java.util.Date;
 
-```xml
-<dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-databind</artifactId>
-    <version>2.16.0</version>
-</dependency>
+public class JwtUtil {
+    
+    private static final String SECRET = "your-secret-key";
+    private static final long EXPIRATION = 3600000; // 1 hour
+    
+    // 生成 Token
+    public static String generateToken(String username) {
+        return Jwts.builder()
+            .setSubject(username)
+            .setIssuedAt(new Date())
+            .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
+            .signWith(SignatureAlgorithm.HS512, SECRET)
+            .compact();
+    }
+    
+    // 解析 Token
+    public static String getUsernameFromToken(String token) {
+        return Jwts.parser()
+            .setSigningKey(SECRET)
+            .parseClaimsJws(token)
+            .getBody()
+            .getSubject();
+    }
+}
 ```
 
-### 示例
+### 1.5 测试库 <Badge type="tip" text="单元测试" /> <Badge type="info" text="Mock框架" /> <Badge type="warning" text="集成测试" />
+
+| 库 | 框架 | 类型 | 易用性 | 适用场景 |
+|----|------|------|--------|---------|
+| **JUnit 5** | ⭐⭐⭐⭐⭐ | 单元测试 | ⭐⭐⭐⭐⭐ | **单元测试首选** |
+| **Mockito** | ⭐⭐⭐⭐⭐ | Mock 框架 | ⭐⭐⭐⭐⭐ | Mock 依赖对象 |
+| **TestNG** | ⭐⭐⭐⭐ | 单元测试 | ⭐⭐⭐⭐ | 复杂测试场景 |
+| **AssertJ** | ⭐⭐⭐⭐⭐ | 断言库 | ⭐⭐⭐⭐⭐ | 流式断言 |
+| **Spring Boot Test** | ⭐⭐⭐⭐⭐ | 集成测试 | ⭐⭐⭐⭐⭐ | Spring 集成测试 |
+
+#### 1.5.1 JUnit 5 单元测试
+
+```java
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class UserServiceTest {
+    
+    private UserService userService;
+    
+    @BeforeEach
+    void setUp() {
+        userService = new UserService();
+    }
+    
+    @Test
+    void testCreateUser() {
+        User user = new User("Alice", "alice@example.com");
+        User created = userService.create(user);
+        
+        assertNotNull(created);
+        assertEquals("Alice", created.getName());
+        assertNotNull(created.getId());
+    }
+    
+    @Test
+    void testUserNotFound() {
+        assertThrows(UserNotFoundException.class, () -> {
+            userService.getById(999L);
+        });
+    }
+}
+```
+
+#### 1.5.2 Mockito 模拟
+
+```java
+import org.mockito.Mock;
+import org.mockito.InjectMocks;
+import static org.mockito.Mockito.*;
+
+public class OrderServiceTest {
+    
+    @Mock
+    private UserRepository userRepository;
+    
+    @InjectMocks
+    private OrderService orderService;
+    
+    @Test
+    void testCreateOrder() {
+        User user = new User("Alice");
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        
+        Order order = orderService.createOrder(1L, 100);
+        
+        assertEquals("Alice", order.getUser().getName());
+        verify(userRepository, times(1)).findById(1L);
+    }
+}
+```
+
+#### 1.5.3 AssertJ 流式断言
+
+```java
+import static org.assertj.core.api.Assertions.*;
+
+public class UserAssertionTest {
+    
+    @Test
+    void testUserAssertions() {
+        User user = new User("Alice", "alice@example.com");
+        
+        assertThat(user)
+            .isNotNull()
+            .extracting("name", "email")
+            .contains("Alice", "alice@example.com");
+        
+        assertThat(user.getName())
+            .isNotEmpty()
+            .startsWith("Al")
+            .hasSizeBetween(3, 10);
+    }
+}
+```
+
+#### 1.5.4 Spring Boot Test 集成测试
+
+```java
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+
+@SpringBootTest
+public class UserControllerIntegrationTest {
+    
+    @Autowired
+    private TestRestTemplate restTemplate;
+    
+    @Test
+    void testGetUser() {
+        User user = restTemplate.getForObject("/api/users/1", User.class);
+        
+        assertNotNull(user);
+        assertEquals("Alice", user.getName());
+    }
+}
+```
+
+## 2. ==JSON 库==
+
+| 库 | 性能 | 易用性 | 功能完整性 | 生态 | 适用场景 |
+|----|------|--------|-----------|------|---------|
+| **Jackson** | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | **工业开发首选** |
+| **Fastjson2** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | 高性能需求 |
+| **Gson** | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐ | 简单场景 |
+| **Protocol Buffers** | ⭐⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | 微服务通信 |
+| **Thrift** | ⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | 跨语言 RPC |
+
+### 2.1 Jackson <Badge type="tip" text="工业首选" /> <Badge type="info" text="注解处理" /> <Badge type="warning" text="高性能" />
+
+**基本序列化/反序列化**
 
 ```java
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.annotation.*;
 
 public class JacksonExample {
     
@@ -444,466 +869,93 @@ public class JacksonExample {
         Person person = new Person("Alice", 25, "alice@example.com");
         String json = mapper.writeValueAsString(person);
         System.out.println(json);
-        // {"name":"Alice","age":25,"email":"alice@example.com"}
         
         // JSON -> 对象
         Person parsed = mapper.readValue(json, Person.class);
         System.out.println(parsed);
         
-        // 美化输出
-        String prettyJson = mapper.writerWithDefaultPrettyPrinter()
-            .writeValueAsString(person);
-        System.out.println(prettyJson);
-        
         // 集合
-        List<Person> people = Arrays.asList(
-            new Person("Alice", 25, "alice@example.com"),
-            new Person("Bob", 30, "bob@example.com")
-        );
+        List<Person> people = Arrays.asList(person);
         String listJson = mapper.writeValueAsString(people);
-        System.out.println(listJson);
-        
-        // JSON -> List
         List<Person> parsedList = mapper.readValue(
             listJson,
             new TypeReference<List<Person>>() {}
         );
-        
-        // JSON -> Map
-        Map<String, Object> map = mapper.readValue(
-            json,
-            new TypeReference<Map<String, Object>>() {}
-        );
-        System.out.println(map);
     }
 }
 
-// 使用注解
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 class Person {
-    
-    @JsonProperty("name")  // 指定JSON字段名
     private String name;
-    
     private int age;
-    
-    @JsonProperty("email")
-    private String email;
-    
-    @JsonIgnore  // 序列化时忽略
-    private String password;
-    
-    @JsonFormat(pattern = "yyyy-MM-dd")  // 日期格式
-    private Date birthDate;
-}
-```
-
----
-
-## 5. Lombok - 代码简化
-
-### Maven 依赖
-
-```xml
-<dependency>
-    <groupId>org.projectlombok</groupId>
-    <artifactId>lombok</artifactId>
-    <version>1.18.30</version>
-    <scope>provided</scope>
-</dependency>
-```
-
-### 示例
-
-```java
-import lombok.*;
-
-// @Data = @Getter + @Setter + @ToString + @EqualsAndHashCode + @RequiredArgsConstructor
-@Data
-public class User {
-    private Long id;
-    private String username;
     private String email;
 }
-
-// @Builder - 构建器模式
-@Builder
-@Data
-class Product {
-    private Long id;
-    private String name;
-    private BigDecimal price;
-    private String description;
-}
-
-// 使用
-Product product = Product.builder()
-    .id(1L)
-    .name("iPhone")
-    .price(new BigDecimal("999.99"))
-    .description("Smartphone")
-    .build();
-
-// @Slf4j - 日志
-@Slf4j
-@Service
-class UserService {
-    
-    public void doSomething() {
-        log.info("Info message");
-        log.error("Error message", new Exception());
-        log.debug("Debug message");
-    }
-}
-
-// @AllArgsConstructor - 全参构造器
-@AllArgsConstructor
-class Order {
-    private Long id;
-    private String orderNo;
-    private BigDecimal amount;
-}
-
-// @NoArgsConstructor - 无参构造器
-@NoArgsConstructor
-class Customer {
-    private Long id;
-    private String name;
-}
-
-// @RequiredArgsConstructor - 必需参数构造器 (final字段)
-@RequiredArgsConstructor
-class OrderService {
-    private final OrderRepository orderRepository;
-    private final UserRepository userRepository;
-}
-
-// @Value - 不可变类
-@Value
-class Money {
-    BigDecimal amount;
-    String currency;
-}
-
-// @SneakyThrows - 隐式抛出异常
-class FileUtils {
-    
-    @SneakyThrows
-    public static String readFile(String path) {
-        return Files.readString(Paths.get(path));
-    }
-}
 ```
 
----
-
-## 6. Hutool - 国产工具库
-
-### Maven 依赖
-
-```xml
-<dependency>
-    <groupId>cn.hutool</groupId>
-    <artifactId>hutool-all</artifactId>
-    <version>5.8.24</version>
-</dependency>
-```
-
-### 6.1 日期时间工具
+### 2.2 Fastjson2 <Badge type="tip" text="最高性能" /> <Badge type="info" text="国产方案" /> <Badge type="warning" text="易用性强" />
 
 ```java
-import cn.hutool.core.date.*;
+import com.alibaba.fastjson2.JSON;
 
-public class HutoolDateExample {
+public class Fastjson2Example {
     
     public static void main(String[] args) {
-        // 获取当前时间
-        Date now = DateUtil.date();
+        Person person = new Person("Alice", 25, "alice@example.com");
         
-        // 格式化
-        String formatted = DateUtil.format(now, "yyyy-MM-dd HH:mm:ss");
-        System.out.println(formatted);
+        // 对象 -> JSON
+        String json = JSON.toJSONString(person);
+        System.out.println(json);
         
-        // 解析
-        Date parsed = DateUtil.parse("2026-02-04", "yyyy-MM-dd");
-        
-        // 计算时间差
-        long between = DateUtil.between(now, parsed, DateUnit.DAY);
-        System.out.println("相差天数: " + between);
-        
-        // 偏移日期
-        Date tomorrow = DateUtil.offsetDay(now, 1);
-        Date nextWeek = DateUtil.offsetWeek(now, 1);
-        
-        // 获取年月日
-        int year = DateUtil.year(now);
-        int month = DateUtil.month(now) + 1;  // 0-based
-        int day = DateUtil.dayOfMonth(now);
-        
-        // 判断是否为周末
-        boolean isWeekend = DateUtil.isWeekend(now);
-        System.out.println("是否周末: " + isWeekend);
-        
-        // 获取一天的开始和结束
-        Date beginOfDay = DateUtil.beginOfDay(now);
-        Date endOfDay = DateUtil.endOfDay(now);
+        // JSON -> 对象
+        Person parsed = JSON.parseObject(json, Person.class);
+        System.out.println(parsed);
     }
 }
 ```
 
-### 6.2 字符串工具
+### 2.3 Protocol Buffers / Thrift <Badge type="tip" text="跨语言" /> <Badge type="info" text="RPC框架" /> <Badge type="warning" text="微服务" />
 
-```java
-import cn.hutool.core.util.StrUtil;
+这两个库主要用于微服务和跨语言通信，定义 `.proto` 文件后自动生成序列化代码。
 
-public class HutoolStrExample {
-    
-    public static void main(String[] args) {
-        // 判空
-        System.out.println(StrUtil.isEmpty(""));      // true
-        System.out.println(StrUtil.isBlank("  "));    // true
-        
-        // 格式化
-        String formatted = StrUtil.format("Hello {}, age is {}", "Alice", 25);
-        System.out.println(formatted);  // "Hello Alice, age is 25"
-        
-        // 驼峰转下划线
-        String underline = StrUtil.toUnderlineCase("userName");
-        System.out.println(underline);  // "user_name"
-        
-        // 下划线转驼峰
-        String camel = StrUtil.toCamelCase("user_name");
-        System.out.println(camel);  // "userName"
-        
-        // 去除前后缀
-        String result = StrUtil.removeSuffix("test.txt", ".txt");
-        System.out.println(result);  // "test"
-        
-        // 重复字符串
-        String repeated = StrUtil.repeat("*", 5);
-        System.out.println(repeated);  // "*****"
-    }
-}
-```
+::: card title="总结" icon="twemoji:star"
+- **Spring Boot**: 默认 Jackson，无需额外配置
+- **高性能需求**: Fastjson2 + Jackson 验证
+- **微服务架构**: Protocol Buffers 或 gRPC
+:::
 
-### 6.3 集合工具
+## 3. ==日志库==
 
-```java
-import cn.hutool.core.collection.*;
+| 库 | 类型 | 性能 | 易用性 | 功能 | 适用场景 |
+|----|------|------|--------|------|---------|
+| **SLF4J** | ⭐⭐⭐⭐⭐ | 日志门面 | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | 日志抽象 |
+| **Logback** | ⭐⭐⭐⭐⭐ | 日志框架 | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | **日志框架首选** |
+| **Log4j 2** | ⭐⭐⭐⭐⭐ | 日志框架 | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | 高性能场景 |
+| **Tinylog** | ⭐⭐⭐⭐ | 日志框架 | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | 轻量级方案 |
 
-public class HutoolCollectionExample {
-    
-    public static void main(String[] args) {
-        // 快速创建
-        List<String> list = CollUtil.newArrayList("a", "b", "c");
-        Set<String> set = CollUtil.newHashSet("x", "y", "z");
-        
-        // 判空
-        boolean empty = CollUtil.isEmpty(list);
-        
-        // 集合交集
-        List<Integer> list1 = CollUtil.newArrayList(1, 2, 3);
-        List<Integer> list2 = CollUtil.newArrayList(2, 3, 4);
-        Collection<Integer> intersection = CollUtil.intersection(list1, list2);
-        System.out.println(intersection);  // [2, 3]
-        
-        // 集合并集
-        Collection<Integer> union = CollUtil.union(list1, list2);
-        System.out.println(union);  // [1, 2, 3, 4]
-        
-        // 集合转字符串
-        String joined = CollUtil.join(list, ",");
-        System.out.println(joined);  // "a,b,c"
-        
-        // 分组
-        List<User> users = CollUtil.newArrayList(
-            new User(1L, "Alice", 25),
-            new User(2L, "Bob", 25),
-            new User(3L, "Charlie", 30)
-        );
-        Map<Integer, List<User>> grouped = CollUtil.groupingBy(
-            users, User::getAge);
-        System.out.println(grouped);
-    }
-}
-```
+### 3.1 SLF4J <Badge type="tip" text="日志门面" /> <Badge type="info" text="抽象层" />
 
-### 6.4 HTTP 工具
+SLF4J（Simple Logging Facade for Java）是一个日志抽象层，允许使用者在部署时选择自己想要的日志框架。
 
-```java
-import cn.hutool.http.*;
+::: tabs
 
-public class HutoolHttpExample {
-    
-    public static void main(String[] args) {
-        // GET 请求
-        String result = HttpUtil.get("https://api.example.com/users");
-        System.out.println(result);
-        
-        // GET 请求带参数
-        Map<String, Object> params = new HashMap<>();
-        params.put("page", 1);
-        params.put("size", 10);
-        String result2 = HttpUtil.get("https://api.example.com/users", params);
-        
-        // POST 请求
-        String result3 = HttpUtil.post(
-            "https://api.example.com/users",
-            "{\"name\":\"Alice\",\"age\":25}"
-        );
-        
-        // 下载文件
-        HttpUtil.downloadFile(
-            "https://example.com/file.pdf",
-            new File("/tmp/downloaded.pdf")
-        );
-        
-        // 高级用法
-        HttpResponse response = HttpRequest.post("https://api.example.com/login")
-            .header("Content-Type", "application/json")
-            .body("{\"username\":\"alice\",\"password\":\"123456\"}")
-            .timeout(5000)
-            .execute();
-        
-        System.out.println("Status: " + response.getStatus());
-        System.out.println("Body: " + response.body());
-    }
-}
-```
+@tab Logback
 
-### 6.5 加密解密
+啊叭叭叭叭
 
-```java
-import cn.hutool.crypto.*;
-import cn.hutool.crypto.digest.*;
+@tab Log4j 2
 
-public class HutoolCryptoExample {
-    
-    public static void main(String[] args) {
-        String text = "Hello World";
-        
-        // MD5
-        String md5 = DigestUtil.md5Hex(text);
-        System.out.println("MD5: " + md5);
-        
-        // SHA-256
-        String sha256 = DigestUtil.sha256Hex(text);
-        System.out.println("SHA-256: " + sha256);
-        
-        // Base64
-        String base64 = SecureUtil.base64Encode(text);
-        System.out.println("Base64: " + base64);
-        String decoded = SecureUtil.base64Decode(base64);
-        System.out.println("Decoded: " + decoded);
-        
-        // AES 加密
-        String key = "1234567890123456";  // 16字节密钥
-        AES aes = SecureUtil.aes(key.getBytes());
-        String encrypted = aes.encryptHex(text);
-        System.out.println("AES加密: " + encrypted);
-        String decrypted = aes.decryptStr(encrypted);
-        System.out.println("AES解密: " + decrypted);
-        
-        // RSA 加密
-        RSA rsa = SecureUtil.rsa();
-        byte[] encrypted2 = rsa.encrypt(text.getBytes(), KeyType.PublicKey);
-        byte[] decrypted2 = rsa.decrypt(encrypted2, KeyType.PrivateKey);
-        System.out.println("RSA解密: " + new String(decrypted2));
-    }
-}
-```
+Log4j 2 是对 Log4j 的重大升级，提供了更好的性能和更多功能。
 
----
+@tab Tinylog
 
-## 7. MapStruct - 对象映射
+Log4j 2 是对 Log4j 的重大升级，提供了更好的性能和更多功能。
 
-### Maven 依赖
+:::
 
-```xml
-<dependency>
-    <groupId>org.mapstruct</groupId>
-    <artifactId>mapstruct</artifactId>
-    <version>1.5.5.Final</version>
-</dependency>
-<dependency>
-    <groupId>org.mapstruct</groupId>
-    <artifactId>mapstruct-processor</artifactId>
-    <version>1.5.5.Final</version>
-    <scope>provided</scope>
-</dependency>
-```
-
-### 示例
-
-```java
-import org.mapstruct.*;
-
-// 实体类
-@Data
-class UserEntity {
-    private Long id;
-    private String username;
-    private String email;
-    private Date createTime;
-}
-
-// DTO
-@Data
-class UserDTO {
-    private Long id;
-    private String username;
-    private String email;
-    private String createTimeStr;
-}
-
-// Mapper 接口
-@Mapper(componentModel = "spring")
-public interface UserMapper {
-    
-    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
-    
-    // 基本映射
-    @Mapping(source = "createTime", target = "createTimeStr", dateFormat = "yyyy-MM-dd")
-    UserDTO toDTO(UserEntity entity);
-    
-    @Mapping(target = "createTime", ignore = true)
-    UserEntity toEntity(UserDTO dto);
-    
-    // 批量映射
-    List<UserDTO> toDTOList(List<UserEntity> entities);
-}
-
-// 使用
-public class MapStructExample {
-    
-    public static void main(String[] args) {
-        UserEntity entity = new UserEntity();
-        entity.setId(1L);
-        entity.setUsername("Alice");
-        entity.setEmail("alice@example.com");
-        entity.setCreateTime(new Date());
-        
-        // 转换
-        UserDTO dto = UserMapper.INSTANCE.toDTO(entity);
-        System.out.println(dto);
-    }
-}
-```
-
----
-
-## 总结
-
-| 库 | 用途 | 核心功能 |
-|----|------|---------|
-| **Guava** | Google核心库 | 集合增强、缓存、并发、字符串 |
-| **Commons Lang3** | 通用工具 | 字符串、数组、日期、对象操作 |
-| **Commons Collections** | 集合增强 | 集合运算、特殊集合类型 |
-| **Jackson** | JSON处理 | 序列化/反序列化 |
-| **Lombok** | 代码简化 | 自动生成getter/setter/构造器 |
-| **Hutool** | 国产工具库 | 日期、HTTP、加密、文件 |
-| **MapStruct** | 对象映射 | DTO转换 |
-
-这些库基本覆盖了 Java 日常开发的常见需求,建议熟练掌握。
+::: card title="总结" icon="twemoji:star"
+- **新项目推荐**: SLF4J + Logback（简单快速）或 SLF4J + Log4j 2（高性能）
+- **性能敏感**: 使用 Log4j 2 + 异步 Appender
+- **过渡项目**: 使用 SLF4J，可灵活切换底层实现
+:::
